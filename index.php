@@ -23,15 +23,15 @@
                             <form>
                                 <div class="input-group mb-3">
                                     <span class="input-group-text bg-white"><i class="fas fa-map-marker-alt text-warning"></i></span>
-                                    <input type="text" class="form-control" placeholder="Choose pick up location">
+                                    <input readonly type="text" class="form-control" placeholder="Choose pick up location">
                                 </div>
                                 <div class="input-group mb-3">
                                     <span class="input-group-text bg-white"><i class="fas fa-map-marker-alt text-danger"></i></span>
-                                    <input type="text" class="form-control" placeholder="Choose drop off location">
+                                    <input readonly type="text" class="form-control" placeholder="Choose drop off location">
                                 </div>
                                 <div class="input-group mb-3">
                                     <span class="input-group-text bg-white"><i class="fas fa-calendar-alt text-secondary"></i></span>
-                                    <input type="text" class="form-control" placeholder="Choose date and time">
+                                    <input readonly type="text" class="form-control" placeholder="Choose date and time">
                                 </div>
                                 <button type="button" class="btn btn-dark mt-3">Book Now</button>
                             </form>
