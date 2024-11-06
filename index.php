@@ -3,7 +3,7 @@
 <head>
     
     <?php include 'header/header.php'?>
-    <title>D & I Cebu Car Rental</title>
+    <title>D & I Cebu Car Rental HAHAHAHHAAHHA</title>
 </head>
 <body>
 
