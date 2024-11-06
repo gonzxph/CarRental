@@ -21,7 +21,7 @@
                     <input type="password" id="password" name="password" class="form-control" placeholder="*******" />
                 </div>
                 <a href="#" class="float-end mb-3">Forgot password?</a><br>
-                <button type="submit" class="btn btn-primary mt-3 mx-auto d-block">Login</button>
+                <button type="submit" class="btn btn-primary mt-3 mx-auto d-block w-100">Login</button>
 
             </form>
         </div>
