@@ -28,4 +28,5 @@
     </div>
 
 </body>
+<?php include 'footer/js/js.php'?>
 </html>
