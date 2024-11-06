@@ -9,9 +9,9 @@
 
     <?php include 'header/nav.php'?> 
 
-    <div class="container one vh-100 p-5">
-        <div class="row">
-            <div class="col-lg-6 mt-5">
+    <div class="container one vh-100">
+        <div class="row p-5">
+            <div class="col-lg-6 mt-5 mb-3">
                 <h1 class="text-center">Your ON-THE-GO road partner</h1>
                 <p class="text-center ">Explore Cebu with reliable, affordable, and quality vehicles.</p>
             </div>
