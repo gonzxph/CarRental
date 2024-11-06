@@ -9,7 +9,7 @@
 
     <?php include 'header/nav.php'?> 
 
-    <div class="container one vh-100">
+    <div class="container one vh-70">
         <div class="row p-5">
             <div class="col-lg-6 mt-5 mb-3">
                 <h1 class="text-center">Your ON-THE-GO road partner</h1>
