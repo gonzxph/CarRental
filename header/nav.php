@@ -1,4 +1,4 @@
-<nav class="navbar navbar-expand-lg navbar-light bg-light shadow-sm">
+<nav class="navbar navbar-expand-sm navbar-light bg-light shadow-sm">
   <div class="container-fluid">
     <a class="navbar-brand mx-auto" href="#">
         <img src="images/logo/logo1.png" height="50" style="margin-left:25px">
