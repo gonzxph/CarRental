@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <?php include 'header/header.php'?>
-    <title>Login you account HAHAHAHHAHAHAH</title>
+    <title>Login you account</title>
 </head>
 <body>
     <?php include 'header/nav.php'?> 
