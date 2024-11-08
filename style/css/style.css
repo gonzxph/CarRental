@@ -1,10 +1,4 @@
-.container.one {
-    background-color: url('images/bg/bg-cclex.jpeg');
-    background-size: cover;        /* Makes the image cover the entire container */
-    background-position: center;   /* Centers the background image */
-    background-repeat: no-repeat;  /* Prevents the image from repeating */
 
-}
 
 /*nav.php*/
 a:hover{
