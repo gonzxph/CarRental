@@ -22,3 +22,17 @@ a:hover{
 }
 
 
+
+.back-btn {
+    background: transparent;  /* Remove background */
+    border: none;             /* Remove border */
+    padding: 0;               /* Remove padding */
+    font-size: 20px;          /* Adjust icon size if needed */
+    cursor: pointer;         /* Change cursor to pointer */
+  }
+  
+  .back-btn i {
+    color: #000;             /* Set the icon color */
+    font-size: 20px;         /* Adjust icon size */
+  }
+

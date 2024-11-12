@@ -64,7 +64,7 @@
                             <i class="fa-regular fa-circle-dot me-2"></i>
                             <span>Use my current location</span>
                         </button>
-                        <button class="btn d-flex align-items-center">
+                        <button class="btn d-flex align-items-center" onclick="openMapModal()">
                             <i class="fa-solid fa-map me-2"></i>
                             <span>Set location in map</span>
                         </button>
@@ -86,6 +86,28 @@
             </div> <!-- Closing modal-content -->
         </div> <!-- Closing modal-dialog -->
     </div> <!-- Closing modal -->
+
+
+
+<!-- Second Modal for Map -->
+<div class="modal fade" id="mapModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="back-btn" onclick="backToPickupModal()"><i class="fas fa-arrow-left"></i></button>
+                <h1 class="modal-title fs-5 m-3">Set Location on Map</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body">
+                <div id="map" style="height: 450px;"></div>
+                <div id="locationResultMap" class="mt-3"></div> <!-- Display selected address here -->
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" onclick="selectMapLocation()">Select Location</button>
+            </div>
+        </div>
+    </div>
+</div>
 
 
 <!-- Modal Structure -->
