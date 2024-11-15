@@ -2,47 +2,53 @@ let selectedLocationType = ''; // To store if it's pickup or drop-off
 let selectedAddress = ''; // To store the selected address
 let marker = null;  // To store the marker
 let cebuProvinceBounds;  // To define the bounds of Cebu Province
+var time = '';
 
 document.addEventListener('DOMContentLoaded', function() {
     const pickupModal = document.getElementById('pickupModal');
     const mapModal = new bootstrap.Modal(document.getElementById('mapModal'));
 
-    // Define the boundary for Cebu Province (approximate bounds for the whole province)
-    cebuProvinceBounds = new google.maps.LatLngBounds(
-        new google.maps.LatLng(9.5800, 123.0200),  // Southwest corner of Cebu Province
-        new google.maps.LatLng(10.8500, 124.1000)   // Northeast corner of Cebu Province
-    );
+    // Check if the Google object is loaded
+    if (typeof google === 'object' && typeof google.maps === 'object') {
+        // Define the boundary for Cebu Province (approximate bounds for the whole province)
+        cebuProvinceBounds = new google.maps.LatLngBounds(
+            new google.maps.LatLng(9.5800, 123.0200),  // Southwest corner of Cebu Province
+            new google.maps.LatLng(10.8500, 124.1000)   // Northeast corner of Cebu Province
+        );
 
-    // Event listener for the pickup input field
-    document.getElementById('pickupInput').addEventListener('click', () => {
-        selectedLocationType = 'pickup';
-        document.getElementById('modalTitle').innerText = 'Choose your pickup location';
-    });
-
-    // Event listener for the drop-off input field
-    document.getElementById('dropoffInput').addEventListener('click', () => {
-        selectedLocationType = 'dropoff';
-        document.getElementById('modalTitle').innerText = 'Choose your drop-off location';
-    });
-
-    // Initialize Google Places Autocomplete when modal is shown
-    pickupModal.addEventListener('shown.bs.modal', function () {
-        const input = document.getElementById('autocomplete');
-        const autocomplete = new google.maps.places.Autocomplete(input, {
-            componentRestrictions: { country: 'PH' }, // Restrict to the Philippines
-            bounds: cebuProvinceBounds  // Restrict autocomplete results to Cebu Province
+        // Event listener for the pickup input field
+        document.getElementById('pickupInput').addEventListener('click', () => {
+            selectedLocationType = 'pickup';
+            document.getElementById('modalTitle').innerText = 'Choose your pickup location';
         });
 
-        autocomplete.addListener('place_changed', () => {
-            const place = autocomplete.getPlace();
-            if (place.formatted_address) {
-                selectedAddress = place.formatted_address;
-                document.getElementById("locationResult").innerText = "Address: " + selectedAddress;
-            } else {
-                alert("No valid address found. Please try again.");
-            }
+        // Event listener for the drop-off input field
+        document.getElementById('dropoffInput').addEventListener('click', () => {
+            selectedLocationType = 'dropoff';
+            document.getElementById('modalTitle').innerText = 'Choose your drop-off location';
         });
-    });
+
+        // Initialize Google Places Autocomplete when modal is shown
+        pickupModal.addEventListener('shown.bs.modal', function () {
+            const input = document.getElementById('autocomplete');
+            const autocomplete = new google.maps.places.Autocomplete(input, {
+                componentRestrictions: { country: 'PH' }, // Restrict to the Philippines
+                bounds: cebuProvinceBounds  // Restrict autocomplete results to Cebu Province
+            });
+
+            autocomplete.addListener('place_changed', () => {
+                const place = autocomplete.getPlace();
+                if (place.formatted_address) {
+                    selectedAddress = place.formatted_address;
+                    document.getElementById("locationResult").innerText = "Address: " + selectedAddress;
+                } else {
+                    alert("No valid address found. Please try again.");
+                }
+            });
+        });
+    } else {
+        console.error("Google Maps JavaScript API is not loaded.");
+    }
 });
 
 // Function to get the user's current location using Geolocation API
@@ -138,6 +144,9 @@ function backToPickupModal() {
     pickupModal.show();
 }
 
+
+
+
 function selectMapLocation() {
     const mapModal = bootstrap.Modal.getInstance(document.getElementById('mapModal'));
     const inputField = selectedLocationType === 'pickup' 
@@ -148,48 +157,57 @@ function selectMapLocation() {
     mapModal.hide();
 }
 
+
 // Load Google Map with clickable functionality
 function loadGoogleMap() {
     const mapDiv = document.getElementById('map');
     const map = new google.maps.Map(mapDiv, {
         center: { lat: 10.3157, lng: 123.8854 }, // Centered at Cebu City
-        zoom: 10,  // Set zoom level for Cebu Province view
-        disableDefaultUI: true, // Disable all default UI elements
+        zoom: 10,
+        disableDefaultUI: true,
         restriction: {
-            latLngBounds: cebuProvinceBounds, // Limit the map to Cebu Province bounds
-            strictBounds: true // Enforce strict boundary restriction
+            latLngBounds: cebuProvinceBounds,
+            strictBounds: true
         }
     });
 
     const geocoder = new google.maps.Geocoder();
 
-    // Click event to get the address from lat/lng
+    // Click event to place the marker and get the address
     map.addListener('click', function(event) {
         const clickedLocation = event.latLng;
 
-        // Check if the clicked location is within Cebu Province bounds
         if (!cebuProvinceBounds.contains(clickedLocation)) {
             alert("Please select a location within Cebu Province.");
             return;
         }
 
-        geocodeLatLng(geocoder, clickedLocation);
+        // Set the marker position and get the address
+        setMarkerAndGeocode(geocoder, clickedLocation, map);
+    });
+}
 
-        // If a marker exists, remove it before adding a new one
-        if (marker) {
-            marker.setMap(null);
-        }
+// Function to place marker and set up the geocoding on drag end
+function setMarkerAndGeocode(geocoder, location, map) {
+    // If a marker already exists, remove it
+    if (marker) {
+        marker.setMap(null);
+    }
 
-        // Create a new marker at the clicked location
-        marker = new google.maps.Marker({
-            position: clickedLocation,
-            map: map,
-            icon: {
-                url: "http://maps.google.com/mapfiles/ms/icons/red-dot.png", // Red marker icon
-                scaledSize: new google.maps.Size(40, 40)  // Adjust the size of the marker
-            },
-            draggable: true  // Make the marker draggable
-        });
+    // Create a new marker
+    marker = new google.maps.Marker({
+        position: location,
+        map: map,
+        draggable: true
+    });
+
+    // Geocode the initial location when the marker is placed
+    geocodeLatLng(geocoder, location);
+
+    // Add event listener for when the marker is dragged to a new location
+    marker.addListener('dragend', function() {
+        const newLocation = marker.getPosition();
+        geocodeLatLng(geocoder, newLocation);
     });
 }
 
@@ -208,3 +226,103 @@ function geocodeLatLng(geocoder, latLng) {
         }
     });
 }
+
+//
+//
+// Date and Time field
+//
+//
+
+// For Date and time modal
+
+// Variables to store selected dates and times
+document.addEventListener("DOMContentLoaded", function () {
+    const calendarElement = document.querySelector('#vanillaCalendar');
+    let activeTimeInput = null;
+    let calendar = null; // Declare calendar outside the if block to make it accessible
+
+    if (calendarElement) {
+        calendar = new VanillaCalendar('#vanillaCalendar', {
+            settings: {
+                iso8601: false,
+                range: {
+                    min: new Date().toISOString().split('T')[0], // Set the minimum date to today
+                    max: '2031-12-31'
+                },
+                visibility: {
+                    monthShort: true,
+                    theme: 'light'
+                },
+                selection: {
+                    time: true,
+                    stepMinutes: 30,
+                    day: 'multiple-ranged',
+                }
+            },
+            actions: {
+                changeTime(event, self) {
+                    const selectedTime = self.selectedTime;
+                    if (activeTimeInput && selectedTime) {
+                        activeTimeInput.value = selectedTime;
+                    }
+                },
+                clickDay(event, self) {
+                    console.log("Selected Dates:", self.selectedDates);
+                },
+                clickMonth: (month, year) => {
+                    const minYear = new Date().getFullYear();
+                    const maxYear = 2030;
+                    if (year < minYear) {
+                        calendar.setDate(`${minYear}-01-01`);
+                    } else if (year > maxYear) {
+                        calendar.setDate(`${maxYear}-12-31`);
+                    }
+                }
+            }
+        });
+        calendar.init();
+    } else {
+        console.error("Calendar element not found.");
+    }
+
+    // Set the active input on focus
+    document.getElementById('pickupTimeInput').addEventListener('focus', function () {
+        activeTimeInput = this;
+    });
+
+    document.getElementById('dropOffTimeInput').addEventListener('focus', function () {
+        activeTimeInput = this;
+    });
+
+    document.getElementById('pconfirm').addEventListener('click', function () {
+        if (calendar && calendar.selectedDates.length >= 2) { // Check if calendar and dates are defined
+            const pickupDate = calendar.selectedDates[0]; // Assuming the first date selected is for pickup
+            const dropOffDate = calendar.selectedDates[calendar.selectedDates.length - 1]; // Assuming the second date selected is for drop-off
+        
+            const pickupTime = document.getElementById('pickupTimeInput').value;
+            const dropOffTime = document.getElementById('dropOffTimeInput').value;
+        
+            if (pickupDate && dropOffDate && pickupTime && dropOffTime) {
+                const pickupDateTime = `${new Date(pickupDate).toLocaleDateString('en-US', { day: '2-digit', month: 'short', year: 'numeric' })}, ${pickupTime}`;
+                const dropOffDateTime = `${new Date(dropOffDate).toLocaleDateString('en-US', { day: '2-digit', month: 'short', year: 'numeric' })}, ${dropOffTime}`;
+        
+                const dateTimeDisplay = `${pickupDateTime} - ${dropOffDateTime}`;
+                
+                // Set the formatted date and time in the "Choose date and time" input
+                const dateTimeInput = document.querySelector('input[placeholder="Choose date and time"]');
+                dateTimeInput.value = dateTimeDisplay;
+        
+                // Close the modal
+                const dateTimeModal = bootstrap.Modal.getOrCreateInstance(document.getElementById('dateTimeModal'));
+                dateTimeModal.hide();
+            } else {
+                alert('Please select both pickup and drop-off dates and times.');
+            }
+        } else {
+            alert('Please select the pickup and drop-off dates from the calendar.');
+        }
+    });
+});
+
+
+

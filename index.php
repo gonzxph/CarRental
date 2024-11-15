@@ -110,27 +110,36 @@
 </div>
 
 
-<!-- Modal Structure -->
+<!-- Pickup date and time modal -->
 <div class="modal fade" id="dateTimeModal" tabindex="-1" aria-labelledby="dateTimeModalLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="dateTimeModalLabel">Choose your pick-up date & time</h5>
+                <h5 class="modal-title" id="dateTimeModalLabel">Select Pickup & Drop-off Dates and Times</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                <!-- Vanilla Calendar Container -->
+                <!-- Vanilla Calendar Container for Pick-up Date -->
                 <div id="vanillaCalendar" class="vanilla-calendar"></div>
                 <!-- Time Picker -->
+                <div class="row">
+                    <div class="col">
+                        <label for="pickupTimeInput">Pickup Time:</label>
+                        <input type="text" class="form-control" id="pickupTimeInput" readonly>
+                    </div>
+                    <div class="col">
+                        <label for="dropOffTimeInput">Drop-Off Time:</label>
+                        <input type="text" class="form-control" id="dropOffTimeInput" readonly>
+                    </div>
+                </div>
                 <p class="text-muted mt-2">Please choose a pickup time that is at least 1 hour from the current time.</p>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Next</button>
+                <button type="button" class="btn btn-primary" id="pconfirm">Confirm</button>
             </div>
         </div>
     </div>
 </div>
-
 
 
     <?php include 'footer/footer.php' ?>
@@ -140,49 +149,5 @@
 
 <?php include 'footer/js/js.php' ?>
 <script src="js/main.js"></script>
-
-<script>
-    document.addEventListener("DOMContentLoaded", function () {
-    // Initialize Vanilla Calendar
-    const calendarElement = document.querySelector('#vanillaCalendar');
-    
-    if (calendarElement) {
-        const calendar = new VanillaCalendar('#vanillaCalendar', {
-    settings: {
-        range: {
-            min: new Date().toISOString().split('T')[0], // Set the minimum date to today
-            max: '2031-12-31' // Example max date for testing future dates
-        },
-        visibility: {
-            monthShort: true,
-            theme: 'light'
-        },
-        selection: {
-            time: true,
-            stepMinutes: 30,
-        }
-    },
-    actions: {
-        clickMonth: (month, year) => {
-            // Example logic to prevent going out of bounds
-            const minYear = new Date().getFullYear();
-            const maxYear = 2030; // Adjust max year based on your needs
-
-            if (year < minYear) {
-                calendar.setDate(`${minYear}-01-01`);
-            } else if (year > maxYear) {
-                calendar.setDate(`${maxYear}-12-31`);
-            }
-        }
-    }
-});
-calendar.init();
-    } else {
-        console.error("Calendar element not found.");
-    }
-});
-
-
-</script>
 <script src="https://cdn.jsdelivr.net/npm/vanilla-calendar-pro/build/vanilla-calendar.min.js" defer></script>
 </html>
