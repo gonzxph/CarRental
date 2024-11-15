@@ -1,10 +1,4 @@
-.container.one {
-    background-color: url('images/bg/bg-cclex.jpeg');
-    background-size: cover;        /* Makes the image cover the entire container */
-    background-position: center;   /* Centers the background image */
-    background-repeat: no-repeat;  /* Prevents the image from repeating */
 
-}
 
 /*nav.php*/
 a:hover{
@@ -15,4 +9,30 @@ a:hover{
 .navbar-nav li a{
     padding: 10px 15px;
 }
+
+.pac-container {
+    z-index: 1060 !important;
+}
+
+.modal{
+    z-index: 20;   
+}
+.modal-backdrop{
+    z-index: 10;        
+}
+
+
+
+.back-btn {
+    background: transparent;  /* Remove background */
+    border: none;             /* Remove border */
+    padding: 0;               /* Remove padding */
+    font-size: 20px;          /* Adjust icon size if needed */
+    cursor: pointer;         /* Change cursor to pointer */
+  }
+  
+  .back-btn i {
+    color: #000;             /* Set the icon color */
+    font-size: 20px;         /* Adjust icon size */
+  }
 
