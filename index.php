@@ -10,7 +10,6 @@
 </head>
 <body>
 
-
     <?php include 'header/nav.php' ?>
 
     <div class="container-fluid one vh-75">
