@@ -51,6 +51,31 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 });
 
+
+// For book now button empty
+document.getElementById('bookingForm').addEventListener('submit', function(event){
+
+    const pickupInput = document.getElementById('pickupInput').value.trim();
+    const dropoffInput = document.getElementById('dropoffInput').value.trim();
+    const dateTimeInput = document.getElementById('dateTimeInput').value.trim();
+    const warningMessage = document.getElementById('warningMessage');
+
+    if(!pickupInput || !dropoffInput || !dateTimeInput){
+        event.preventDefault();
+        warningMessage.style.display = 'block';
+
+        setTimeout(() => {
+            warningMessage.style.display = 'none';
+        }, 3000);
+
+
+    }else{
+        alert('success');
+    }
+
+})
+
+
 // Function to get the user's current location using Geolocation API
 function getLocation() {
     if (navigator.geolocation) {
