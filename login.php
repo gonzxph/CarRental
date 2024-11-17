@@ -27,9 +27,9 @@
         </div>
     </div>
 
+<!-- This is a comment -->
 
 
-    
 </body>
 <?php include 'footer/js/js.php'?>
 </html>
