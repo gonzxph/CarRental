@@ -22,6 +22,7 @@
                 </div>
                 <a href="#" class="float-end mb-3">Forgot password?</a><br>
                 <button type="submit" class="btn btn-primary mt-3 mx-auto d-block w-100">Login</button>
+                <button type="submit" class="btn btn-primary mt-3 mx-auto d-block w-100">Login</button>
 
             </form>
         </div>
