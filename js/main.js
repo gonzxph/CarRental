@@ -68,11 +68,7 @@ document.getElementById('bookingForm').addEventListener('submit', function(event
             warningMessage.style.display = 'none';
         }, 3000);
 
-
-    }else{
-        alert('success');
     }
-
 })
 
 
