@@ -127,6 +127,15 @@
                 <div id="vanillaCalendar" class="vanilla-calendar calendar-center"></div>
                 
                 <!-- Time Picker -->
+                <div id="timeEmptyErr" class="text-danger mt-2" style="display: none">
+                    <p>Please select either the Pickup Time or Drop-Off Time input first.</p>
+                </div>
+                <div id="timeOneFilledErr" class="text-danger mt-2" style="display: none">
+                    <p>Please select both pickup and drop-off dates and times.</p>
+                </div>
+                <div id="CalEmptyErr" class="text-danger mt-2" style="display: none">
+                    <p>Please select the pickup and drop-off dates from the calendar.</p>
+                </div>
                 <div class="row mt-4">
                     <div class="col">
                         <label for="pickupTimeInput">Pickup Time:</label>
