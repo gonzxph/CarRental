@@ -40,7 +40,7 @@
                                 <div id="warningMessage" class="text-danger m-3" style="display: none;">
                                     Please fill out all fields before submitting!
                                 </div>
-                                <button type="submit" class="btn btn-dark mt-3">Book Now</button>
+                                <button type="submit" class="btn btn-dark mt-3">Search</button>
                             </form>
                         </div>
                     </div>
