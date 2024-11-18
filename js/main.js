@@ -286,8 +286,16 @@ document.addEventListener("DOMContentLoaded", function () {
             },
             actions: {
                 changeTime(event, self) {
+                    // Check if activeTimeInput is not set
+                    if (!activeTimeInput) {
+                        document.getElementById('timeEmptyErr').style.display = 'block';
+                        setTimeout(() => {
+                            document.getElementById('timeEmptyErr').style.display = 'none';
+                        }, 5000)
+                    }
+
                     const selectedTime = self.selectedTime;
-                    if (activeTimeInput && selectedTime) {
+                    if (selectedTime) {
                         activeTimeInput.value = selectedTime;
                     }
                 },
@@ -341,10 +349,16 @@ document.addEventListener("DOMContentLoaded", function () {
                 const dateTimeModal = bootstrap.Modal.getOrCreateInstance(document.getElementById('dateTimeModal'));
                 dateTimeModal.hide();
             } else {
-                alert('Please select both pickup and drop-off dates and times.');
+                document.getElementById('timeOneFilledErr').style.display = 'block';
+                setTimeout(() => {
+                    document.getElementById('timeOneFilledErr').style.display = 'none';
+                }, 5000)
             }
         } else {
-            alert('Please select the pickup and drop-off dates from the calendar.');
+            document.getElementById('CalEmptyErr').style.display = 'block';
+            setTimeout(() => {
+                document.getElementById('CalEmptyErr').style.display = 'none';
+            }, 5000)
         }
     });
 });
